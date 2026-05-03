@@ -15,6 +15,10 @@ public record ErrorResponse(
         List<FieldError> fieldErrors,
         Instant timestamp
 ) {
+    public ErrorResponse {
+        fieldErrors = List.copyOf(fieldErrors);
+    }
+
     /**
      * Convenience constructor for errors without per-field detail.
      *
