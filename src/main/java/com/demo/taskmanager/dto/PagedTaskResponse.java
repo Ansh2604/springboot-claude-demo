@@ -16,6 +16,10 @@ public record PagedTaskResponse(
         long totalElements,
         int totalPages
 ) {
+    public PagedTaskResponse {
+        content = List.copyOf(content);
+    }
+
     /**
      * Builds a {@link PagedTaskResponse} from a Spring Data {@link Page} of tasks.
      *
