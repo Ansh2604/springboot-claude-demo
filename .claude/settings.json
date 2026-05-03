@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "echo '[PreToolUse] $CLAUDE_TOOL_NAME on $CLAUDE_FILE_PATH' >> .claude/audit.log" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          { "type": "command", "command": "if [[ $CLAUDE_FILE_PATH == *.java ]]; then mvn -q spotless:apply || true; fi" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "mvn -q -DskipTests compile && echo 'Build OK' || echo 'Build FAILED'" }
+        ]
+      }
+    ]
+  }
+}
